@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
    assert( img0.isContinuous());
 
    cv::Mat3b hsv0, hsv1, res;
+   cv::Mat1b gray;
    cvtColor(img0, hsv0, CV_BGR2HSV_FULL);
    hsv1.create(hsv0.size());
 
@@ -30,7 +31,10 @@ int main(int argc, char* argv[])
                                                  hsv0.at<Vec3b>(r, c)[2]);
 
        cvtColor(hsv1, res, CV_HSV2BGR_FULL);
-       imshow("ff", res);
+       cvtColor(res, gray, CV_BGR2GRAY);
+       imshow("Party", res);
+       imshow("Gray", gray);
+
        hdelta += 5;
 
    }
