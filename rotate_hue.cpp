@@ -4,11 +4,11 @@
 
 
 cv::Mat3b hsv_in, hsv_out;
-int hdelta = 0;
+int accHOffset = 0;
 
 using namespace cv;
 
-void rotate_hue(cv::Mat3b const& img, cv::Mat3b& result_img)
+void rotate_hue(cv::Mat3b const& img, cv::Mat3b& result_img, int hsteps)
 {
    assert(result_img.size() == img.size() && result_img.type() == img.type());
    hsv_in.create(img.size());
@@ -18,12 +18,12 @@ void rotate_hue(cv::Mat3b const& img, cv::Mat3b& result_img)
 
    for (int r = 0; r < hsv_in.rows; ++r)
       for (int c = 0; c < hsv_in.cols; ++c)
-         hsv_out.at<Vec3b>(r, c) = cv::Vec3b((hsv_in.at<Vec3b>(r, c)[0] + hdelta) % 255,
+         hsv_out.at<Vec3b>(r, c) = cv::Vec3b((hsv_in.at<Vec3b>(r, c)[0] + accHOffset) % 255,
             hsv_in.at<Vec3b>(r, c)[1],
             hsv_in.at<Vec3b>(r, c)[2]);
 
    cvtColor(hsv_out, result_img, CV_HSV2BGR_FULL);
-   hdelta += 15;
+   accHOffset += hsteps;
 }
 
 
@@ -31,5 +31,5 @@ void clear_all()
 {
    hsv_in.release();
    hsv_out.release();
-   hdelta = 0;
+   accHOffset = 0;
 }

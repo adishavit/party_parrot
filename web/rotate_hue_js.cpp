@@ -17,7 +17,8 @@ extern "C"
 
    bool EMSCRIPTEN_KEEPALIVE rotate_colors(int width, int height,
                                            cv::Vec4b* frame4b_ptr,
-                                           cv::Vec4b* frame4b_ptr_out) try
+                                           cv::Vec4b* frame4b_ptr_out, 
+                                           int hsteps) try
    {
       // wrap memory pointers with proper cv::Mat images (no copies)
       cv::Mat4b rgba_in(height, width, frame4b_ptr);
@@ -28,7 +29,7 @@ extern "C"
       bgr_out_g.create(rgba_in.size());
 
       cv::cvtColor(rgba_in, bgr_g, CV_RGBA2BGR);
-      rotate_hue(bgr_g, bgr_out_g);
+      rotate_hue(bgr_g, bgr_out_g, hsteps);
 
       // mix BGR + A (from input) => RGBA output
       const Mat in_mats[] = { bgr_out_g, rgba_in };

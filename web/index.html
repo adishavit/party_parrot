@@ -5,6 +5,7 @@
 
 	var prevSize = 0;
 	var heapBytes = null;
+	var color_change_speed = 10;
 
 	function _freeArray(heapBytes) {
         Module._free(heapBytes.byteOffset);
@@ -62,7 +63,7 @@
 		var heap_src = _arrayToHeap(img_data.data);
 		// Perform operation on copy, no additional conversions needed, direct pointer manipulation
 		// results will be put directly into the output param.
-		Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset);
+		Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset, color_change_speed);
 		// copy output to ImageData
 		img_data.data.set(heap_src);
 		// free heap memory
@@ -72,11 +73,16 @@
         // Start over!
         setTimeout(draw, 35, src_video, dst_context, back_context, width, height);
     }
+	
+	function updateColorChangeSpeed(newValue)
+	{
+		color_change_speed = newValue;
+	}
 </script>
-
 
 <video id=video1 autoplay loop>
     <source src=sirocco.mp4 type=video/mp4>
-</video>
-<canvas id=canvas1></canvas>
+</video><br>
+<canvas id=canvas1></canvas><br>
+<input type="range"  min="0" max="90" value="10" oninput="updateColorChangeSpeed(this.value)" onchange="updateColorChangeSpeed(this.value)"/>
 
