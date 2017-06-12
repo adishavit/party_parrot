@@ -30,7 +30,6 @@
         return heapBytes;
     }
 
-
     // http://html5doctor.com/video-canvas-magic/
     document.addEventListener('DOMContentLoaded', function () {
         var src_video = document.getElementById('video1');
@@ -48,36 +47,43 @@
             dst_canvas.height  = height;
             back_canvas.width  = width;
             back_canvas.height = height;
-            draw(src_video, dst_context, back_context, width, height);
+			
+			draw(src_video, dst_context, back_context, width, height);
         }, false);
 
     }, false);
 
+	prev_timestamp = -1;
     function draw(src_video, dst_context, back_context, width, height) {
-        if (src_video.paused || src_video.ended) return false;
-        // First, draw it into the backing canvas
-        back_context.drawImage(src_video, 0, 0, width, height);
-        // Grab the pixel data from the backing canvas
-        var img_data = back_context.getImageData(0, 0, width, height);
-		
-		var heap_src = _arrayToHeap(img_data.data);
-		// Perform operation on copy, no additional conversions needed, direct pointer manipulation
-		// results will be put directly into the output param.
-		Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset, color_change_speed);
-		// copy output to ImageData
-		img_data.data.set(heap_src);
-		// free heap memory
-		//_freeArray(heap_src);
-				
-        dst_context.putImageData(img_data, 0, 0);
-        // Start over!
-        setTimeout(draw, 35, src_video, dst_context, back_context, width, height);
+        if (src_video.paused || src_video.ended) 
+			return false;
+			
+		var timestamp = src_video.currentTime;
+		if (timestamp !== prev_timestamp) // skip repeated frame
+		{
+			// First, draw it into the backing canvas
+			back_context.drawImage(src_video, 0, 0, width, height);
+			// Grab the pixel data from the backing canvas
+			var img_data = back_context.getImageData(0, 0, width, height);
+			
+			var heap_src = _arrayToHeap(img_data.data);
+			// Perform operation on copy, no additional conversions needed, direct pointer manipulation
+			// results will be put directly into the output param.
+			Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset, color_change_speed);
+			// copy output to ImageData
+			img_data.data.set(heap_src);
+			// free heap memory
+			//_freeArray(heap_src);
+					
+			dst_context.putImageData(img_data, 0, 0);
+			prev_timestamp = timestamp;
+		}
+
+        // Start over! (see: https://stackoverflow.com/a/17048103/135862)
+        requestAnimationFrame(function() { draw(src_video, dst_context, back_context, width, height); });
     }
 	
-	function updateColorChangeSpeed(newValue)
-	{
-		color_change_speed = newValue;
-	}
+	function updateColorChangeSpeed(newValue) { color_change_speed = newValue; }
 </script>
 
 <video id=video1 autoplay loop>
