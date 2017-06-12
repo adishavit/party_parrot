@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<title>OpenCV Video/Canvas</title>
+<script src='hue_rotate.js'></script>
+<script>
+
+	var prevSize = 0;
+	var heapBytes = null;
+
+	function _freeArray(heapBytes) {
+        Module._free(heapBytes.byteOffset);
+		prevSize = 0;
+    }
+
+    function _arrayToHeap(typedArray) {
+        var numBytes = typedArray.length * typedArray.BYTES_PER_ELEMENT;
+
+		if (prevSize == numBytes) {
+			heapBytes.set(typedArray);
+			return heapBytes;
+		}
+
+		if (heapBytes)
+			_freeArray(heapBytes);
+			
+		prevSize = numBytes;
+        var ptr = Module._malloc(numBytes);
+        heapBytes = Module.HEAPU8.subarray(ptr, ptr + numBytes);
+        heapBytes.set(typedArray);
+        return heapBytes;
+    }
+
+
+    // http://html5doctor.com/video-canvas-magic/
+    document.addEventListener('DOMContentLoaded', function () {
+        var src_video = document.getElementById('video1');
+        var dst_canvas = document.getElementById('canvas1');
+        var dst_context = dst_canvas.getContext('2d');
+        var back_canvas = document.createElement('canvas') // not shown
+        var back_context = back_canvas.getContext('2d');
+
+        var width, height;
+
+        src_video.addEventListener('play', function () {
+            width  = src_video.clientWidth;
+            height = src_video.clientHeight;
+            dst_canvas.width   = width;
+            dst_canvas.height  = height;
+            back_canvas.width  = width;
+            back_canvas.height = height;
+            draw(src_video, dst_context, back_context, width, height);
+        }, false);
+
+    }, false);
+
+    function draw(src_video, dst_context, back_context, width, height) {
+        if (src_video.paused || src_video.ended) return false;
+        // First, draw it into the backing canvas
+        back_context.drawImage(src_video, 0, 0, width, height);
+        // Grab the pixel data from the backing canvas
+        var img_data = back_context.getImageData(0, 0, width, height);
+		
+		var heap_src = _arrayToHeap(img_data.data);
+		// Perform operation on copy, no additional conversions needed, direct pointer manipulation
+		// results will be put directly into the output param.
+		Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset);
+		// copy output to ImageData
+		img_data.data.set(heap_src);
+		// free heap memory
+		//_freeArray(heap_src);
+				
+        dst_context.putImageData(img_data, 0, 0);
+        // Start over!
+        setTimeout(draw, 35, src_video, dst_context, back_context, width, height);
+    }
+</script>
+
+
+<video id=video1 autoplay loop>
+    <source src=sirocco.mp4 type=video/mp4>
+</video>
+<canvas id=canvas1></canvas>
+
