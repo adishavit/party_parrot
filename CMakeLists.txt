@@ -11,7 +11,8 @@ if (EMSCRIPTEN)
 	add_executable (hue_rotate web/rotate_hue_js.cpp)
 	target_link_libraries(hue_rotate ${OpenCV_LIBS} rotate_hue)
 	configure_file(${CMAKE_SOURCE_DIR}/web/index.html ${CMAKE_CURRENT_BINARY_DIR}/index.html COPYONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/data/sirocco_w320.mp4 ${CMAKE_CURRENT_BINARY_DIR}/sirocco.mp4 COPYONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/web/color_cycle.js ${CMAKE_CURRENT_BINARY_DIR}/color_cycle.js COPYONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/data/sirocco_w320.mp4 ${CMAKE_CURRENT_BINARY_DIR}/sirocco.mp4 COPYONLY) 
 
 else()
 	add_executable (HueRotate main.cpp)
@@ -19,7 +20,7 @@ else()
 endif()
 
 if(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -O3") # -Oz -s NO_FILESYSTEM=1
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -O3") # -Oz -s NO_FILESYSTEM=1 --profiling
 	
 	if(DEFINED CMAKE_BUILD_TYPE)
 		SET(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE})
