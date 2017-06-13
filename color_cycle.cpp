@@ -1,6 +1,6 @@
 #include <opencv2/imgproc.hpp>
 
-#include "rotate_hue.h"
+#include "color_cycle.h"
 
 
 cv::Mat3b hsv_in, hsv_out;

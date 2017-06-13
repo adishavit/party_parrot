@@ -1,7 +1,7 @@
 #include <iostream>
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
-#include "rotate_hue.h"
+#include "color_cycle.h"
 
 using namespace std;
 using namespace cv;

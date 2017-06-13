@@ -4,7 +4,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "rotate_hue.h"
+#include "color_cycle.h"
 
 // global data
 cv::Mat3b bgr_g, bgr_out_g;
