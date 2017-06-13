@@ -1,5 +1,5 @@
 // create video element : Markdown does not support 'video' and 'canvas' elements:
-function createVideoElements(videoPath)
+function addVideoElements(videoPath)
 {
 	var div = document.getElementById('video_place');
 
@@ -24,9 +24,9 @@ function createVideoElements(videoPath)
 
 function makeFrameProcessor(videoName) {
 
-	var fp = createVideoElements(videoName);
+	var fp = addVideoElements(videoName);
 
-	// Based on http://www.kaizou.org/2012/09/frame-by-frame-video-effects-using-html5-and/
+	// Somewhat based on http://www.kaizou.org/2012/09/frame-by-frame-video-effects-using-html5-and/
     fp.viewport = fp.canvas.getContext("2d");
     fp.width  = fp.canvas.width;
     fp.height = fp.canvas.height;
@@ -68,14 +68,22 @@ function makeFrameProcessor(videoName) {
                          fp.video.videoHeight,0,0,fp.width, fp.height);
         var img_data = fp.ctx.getImageData(0, 0, fp.width, fp.height);
 
-		var heap_src = _arrayToHeap(img_data.data);
+		if (!fp.frame_bytes) {
+			fp.frame_bytes = _arrayToHeap(img_data.data);
+		}
+		else if (fp.frame_bytes.length !== img_data.data.length) {
+			_freeArray(fp.frame_bytes); // free heap memory
+			fp.frame_bytes = _arrayToHeap(img_data.data);
+		}
+		else {
+			fp.frame_bytes.set(img_data.data);
+		}
+		
 		// Perform operation on copy, no additional conversions needed, direct pointer manipulation
 		// results will be put directly into the output param.
-		Module._rotate_colors(img_data.width, img_data.height, heap_src.byteOffset, heap_src.byteOffset, fp.color_change_speed);
+		Module._rotate_colors(img_data.width, img_data.height, fp.frame_bytes.byteOffset, fp.frame_bytes.byteOffset, fp.color_change_speed);
 		// copy output to ImageData
-		img_data.data.set(heap_src);
-		// free heap memory
-		_freeArray(heap_src);
+		img_data.data.set(fp.frame_bytes);
         // Render to viewport
         fp.viewport.putImageData(img_data, 0, 0);
     };
