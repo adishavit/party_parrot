@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <title>OpenCV Video/Canvas</title>
-<div id="video_place">
-</div>
+<div id="video_place"></div>
 <script src='color_cycle_asm.js'></script>
 <script src='color_cycle.js'></script>
 <script>
-    var videoName = "sirocco.mp4";
-    var fp = makeFrameProcessor(videoName);
+    var fp = makeFrameProcessor("sirocco.mp4");
     function updateColorChangeSpeed(newValue) { fp.color_change_speed = newValue; }
 </script>
-<input type="range" min="0" max="50" value="0" oninput="updateColorChangeSpeed(this.value)" onchange="updateColorChangeSpeed(this.value)" />
+<input type="range" min="0" max="20" value="1" oninput="updateColorChangeSpeed(this.value)" onchange="updateColorChangeSpeed(this.value)"/>
