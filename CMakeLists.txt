@@ -10,9 +10,21 @@ add_library(color_cycle_lib color_cycle.cpp color_cycle.h)
 if (EMSCRIPTEN)
 	add_executable (color_cycle_asm web/color_cycle_js.cpp)
 	target_link_libraries(color_cycle_asm ${OpenCV_LIBS} color_cycle_lib)
-	configure_file(${CMAKE_SOURCE_DIR}/web/index.html ${CMAKE_CURRENT_BINARY_DIR}/index.html COPYONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/web/color_cycle.js ${CMAKE_CURRENT_BINARY_DIR}/color_cycle.js COPYONLY)
-	configure_file(${CMAKE_SOURCE_DIR}/data/sirocco_w320.mp4 ${CMAKE_CURRENT_BINARY_DIR}/sirocco.mp4 COPYONLY) 
+
+   # copy files to docs folder
+	configure_file(${CMAKE_SOURCE_DIR}/web/index.html        ${CMAKE_SOURCE_DIR}/docs/demo.html      COPYONLY)
+	configure_file(${CMAKE_SOURCE_DIR}/web/color_cycle.js    ${CMAKE_SOURCE_DIR}/docs/color_cycle.js COPYONLY)
+
+   # post build events - copy files to hosted demo folder
+   add_custom_command(TARGET color_cycle_asm POST_BUILD              # Adds a post-build event to color_cycle_asm
+                      COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+                      ${CMAKE_SOURCE_DIR}/data/sirocco_w320.mp4      # <--this is in-file
+                      ${CMAKE_SOURCE_DIR}/docs/sirocco.mp4)          # <--this is out-file path
+
+   add_custom_command(TARGET color_cycle_asm POST_BUILD              # Adds a post-build event to color_cycle_asm
+                      COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+                      ${CMAKE_CURRENT_BINARY_DIR}/color_cycle_asm.js # <--this is in-file
+                      ${CMAKE_SOURCE_DIR}/docs/color_cycle_asm.js)   # <--this is out-file path
 
 else()
 	add_executable (color_cycle main.cpp)
