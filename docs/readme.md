@@ -18,7 +18,8 @@ Let's make [Sirocco](https://www.facebook.com/siroccokakapo/), the *real* parrot
 
 On the left, the original, a regular HTML5 video.  
 On the right, the same video being processed live, frame-by-frame cycling of the frame's hue channel.  
-This is a live, real time view, running in the browser!
+This is a live, real time view, running in the browser!  
+
 Use the slider to change the color cycle speed.  
 
 ![Sirocco](http://cultofthepartyparrot.com/parrots/parrot.gif) [Adi Shavit](https://twitter.com/adishavit)
