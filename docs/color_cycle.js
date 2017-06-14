@@ -97,5 +97,6 @@ function makeFrameProcessor(videoName) {
         var self = fp;
         requestAnimationFrame(self.render);
     };
+	fp.video.play();
     return fp;
 };
