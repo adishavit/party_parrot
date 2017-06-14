@@ -5,6 +5,8 @@ Here's a little experiment showing how to build a cross-platform C++ OpenCV app 
 
 Let's make [Sirocco](https://www.facebook.com/siroccokakapo/), the *real* parrot, PARTY!
 
-Build with CMake, emspcripten and e.g. ninja and behold (live link coming soon).
+See it [live here](http://videocortex.io/party_parrot/)!  
+
+Built with CMake, emspcripten and ninja on Windows.
 
 Credits: [Cult of the Party Parrot](http://cultofthepartyparrot.com/) :: [BBC Last Chance To See Kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) :: [Sirocco](https://en.wikipedia.org/wiki/Sirocco_(parrot))
