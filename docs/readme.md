@@ -1,7 +1,7 @@
 # OpenCV Web App
 Here's a little experiment showing how to build a cross-platform C++ OpenCV app that also works in the browser (via emscripten). More details in a forthcoming blog post on [my blog](http://videocortex.io).
 
-![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)
+![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)
 
 Let's make [Sirocco](https://www.facebook.com/siroccokakapo/), the *real* parrot, PARTY!
 
