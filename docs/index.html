@@ -5,8 +5,8 @@
 <script src='color_cycle_asm.js'></script>
 <script src='color_cycle.js'></script>
 <script>
-var videoName = "sirocco.mp4";
-var fp = makeFrameProcessor(videoName);
-function updateColorChangeSpeed(newValue) { fp.color_change_speed = newValue; }
+    var videoName = "sirocco.mp4";
+    var fp = makeFrameProcessor(videoName);
+    function updateColorChangeSpeed(newValue) { fp.color_change_speed = newValue; }
 </script>
-<input type="range"  min="0" max="50" value="0" oninput="updateColorChangeSpeed(this.value)" onchange="updateColorChangeSpeed(this.value)"/>
+<input type="range" min="0" max="50" value="0" oninput="updateColorChangeSpeed(this.value)" onchange="updateColorChangeSpeed(this.value)" />
