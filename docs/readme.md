@@ -22,3 +22,5 @@ This is a live, real time view, running in the browser!
 Use the slider to change the color cycle speed.  
 
 Credits: [Cult of the Party Parrot](http://cultofthepartyparrot.com/) :: [BBC Last Chance To See Kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) :: [Sirocco](https://en.wikipedia.org/wiki/Sirocco_(parrot))
+
+![Sirocco](http://cultofthepartyparrot.com/parrots/parrot.gif) [Adi Shavit](https://twitter.com/adishavit)
