@@ -7,6 +7,6 @@ Let's make [Sirocco](https://www.facebook.com/siroccokakapo/), the *real* parrot
 
 See it [live here](http://videocortex.io/party_parrot/)!  
 
-Built with CMake, emspcripten and ninja on Windows.
+Built on Windows with CMake, emspcripten and ninja.
 
 Credits: [Cult of the Party Parrot](http://cultofthepartyparrot.com/) :: [BBC Last Chance To See Kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) :: [Sirocco](https://en.wikipedia.org/wiki/Sirocco_(parrot))
