@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
    {
        while (27 != (c = waitKey(1000.f/vidcap.get(CAP_PROP_FPS))) && (vidcap >> img, !img.empty()))
        {
-          rotate_hue(img, img);
+          color_cycle::rotate_hue(img, img);
           imshow("Party!!", img);
        }
        vidcap.open(argv[1]);

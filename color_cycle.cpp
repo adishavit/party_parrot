@@ -4,30 +4,33 @@
 cv::Mat3b hsv;
 int accHOffset = 0;
 
-void rotate_hue(cv::Mat3b const& img, cv::Mat3b& result_img, int hsteps)
+namespace color_cycle
 {
-   assert(result_img.size() == img.size() && result_img.type() == img.type());
+   void rotate_hue(cv::Mat3b const& img, cv::Mat3b& result_img, int hsteps)
+   {
+      assert(result_img.size() == img.size() && result_img.type() == img.type());
 
-   // re-allocate global temp storage if needed
-   hsv.create(img.size());
-   
-   // convert to HSV
-   cv::cvtColor(img, hsv, CV_BGR2HSV_FULL);
+      // re-allocate global temp storage if needed
+      hsv.create(img.size());
 
-   for (int r = 0; r < hsv.rows; ++r)
-      for (int c = 0; c < hsv.cols; ++c)
-         hsv.at<cv::Vec3b>(r, c)[0] = (hsv.at<cv::Vec3b>(r, c)[0] + accHOffset) % 255; // cycle H
+      // convert to HSV
+      cv::cvtColor(img, hsv, CV_BGR2HSV_FULL);
 
-   // convert back to BGR
-   cv::cvtColor(hsv, result_img, CV_HSV2BGR_FULL);
-   
-   // update cycle offset
-   accHOffset += hsteps;
-}
+      for (int r = 0; r < hsv.rows; ++r)
+         for (int c = 0; c < hsv.cols; ++c)
+            hsv.at<cv::Vec3b>(r, c)[0] = (hsv.at<cv::Vec3b>(r, c)[0] + accHOffset) % 255; // cycle H
 
-void clear_all()
-{
-   // release global's memory
-   hsv.release();
-   accHOffset = 0;
+      // convert back to BGR
+      cv::cvtColor(hsv, result_img, CV_HSV2BGR_FULL);
+
+      // update cycle offset
+      accHOffset += hsteps;
+   }
+
+   void clear_all()
+   {
+      // release global memory
+      hsv.release();
+      accHOffset = 0;
+   }
 }

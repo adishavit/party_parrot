@@ -29,7 +29,7 @@ extern "C"
       bgr_out_g.create(rgba_in.size());
 
       cv::cvtColor(rgba_in, bgr_g, CV_RGBA2BGR);
-      rotate_hue(bgr_g, bgr_out_g, hsteps);
+      color_cycle::rotate_hue(bgr_g, bgr_out_g, hsteps);
 
       // mix BGR + A (from input) => RGBA output
       const Mat in_mats[] = { bgr_out_g, rgba_in };
@@ -52,6 +52,7 @@ extern "C"
 
    void EMSCRIPTEN_KEEPALIVE release()
    {
+      color_cycle::clear_all();
       bgr_g.release();
       bgr_out_g.release();
    }
