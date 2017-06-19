@@ -32,7 +32,8 @@ else()
 endif()
 
 if(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -O3") # -Oz -s NO_FILESYSTEM=1 --profiling
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -O3") # -Oz --profiling
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s NO_FILESYSTEM=1 -s ELIMINATE_DUPLICATE_FUNCTIONS=1 -s NO_EXIT_RUNTIME=1") # reduce file size
 	
 	if(DEFINED CMAKE_BUILD_TYPE)
 		SET(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE})
