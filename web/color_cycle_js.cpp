@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 #include <emscripten.h>
 
 #include <opencv2/core.hpp>
@@ -39,12 +39,12 @@ extern "C"
    }
    catch (std::exception const& e)
    {
-      std::cout << "Exception thrown: " << e.what() << std::endl;
+      printf("Exception thrown: %s\n", e.what());
       return false;
    }
    catch (...)
    {
-      std::cout << "Unknown exception thrown!" << std::endl;
+      printf("Unknown exception thrown!\n");
       return false;
    }
 
