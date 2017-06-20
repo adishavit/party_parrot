@@ -1,6 +1,6 @@
 # OpenCV Web App
 Here's [a little experiment](https://github.com/adishavit/party_parrot) showing how to build a cross-platform C++ OpenCV app that also works in the browser (via emscripten).  
-More details in a forthcoming blog post on [my blog](http://videocortex.io).
+More details in my [**OpenCV Web Apps** blog post](http://videocortex.io/2017/opencv-web-app/).
 
 ![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)
 
