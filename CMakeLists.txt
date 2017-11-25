@@ -7,9 +7,9 @@ include_directories(${OpenCV_INCLUDE_DIRS} .)
 
 add_library(color_cycle_lib color_cycle.cpp color_cycle.h)
 
-option(BUILD_WASM "Build Webassembly" OFF)
-
 if (EMSCRIPTEN)
+	option(BUILD_WASM "Build Webassembly" OFF)
+
 	add_executable (color_cycle_asm web/color_cycle_js.cpp)
 	target_link_libraries(color_cycle_asm ${OpenCV_LIBS} color_cycle_lib)
 
@@ -45,6 +45,7 @@ if(BUILD_WASM)
 endif()
 
 if(UNIX)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -O3 --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -s ALLOW_MEMORY_GROWTH=1") # -Oz --profiling
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s NO_FILESYSTEM=1 -s NO_EXIT_RUNTIME=1") # reduce file size
 	
