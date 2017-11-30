@@ -8,7 +8,7 @@ To build the project as a Webassembly set the BUILD_WASM option in cmake. A demo
 You try out the demos by using Python's Simple HTTP Server. Run the following command in /docs or /docs_wasm:
 ```
 python -m SimpleHTTPServer 80
-```.
+```
 
 
 ![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)
