@@ -4,6 +4,13 @@ Here's a little experiment showing how to build a cross-platform C++ OpenCV app 
 # Webassembly
 To build the project as a Webassembly set the BUILD_WASM option in cmake. A demo is given in docs_wasm.
 
+# Try it out
+You try out the demos by using Python's Simple HTTP Server. Run the following command in /docs or /docs_wasm:
+```
+python -m SimpleHTTPServer 80
+```.
+
+
 ![Sirocco](http://cultofthepartyparrot.com/parrots/rightparrot.gif)
 
 Let's make [Sirocco](https://www.facebook.com/siroccokakapo/), the *real* parrot, PARTY!
