@@ -1,4 +1,31 @@
+var worker = new Worker("color_cycle_worker.js");
+worker.postMessage({'cmd': 'start'}); // Start the worker.
 
+worker.addEventListener('message', function(e) {
+  switch(e.data.cmd) {
+	  case 'onRuntimeInitilized':
+			onRuntimeInitialized();
+			break;
+	  case 'drawProcessedFrame':
+			drawProcessedFrame(e.data.img_data);
+			break;
+  }
+}, false);
+
+var fp;
+
+function onRuntimeInitialized() {
+   fp = makeFrameProcessor("sirocco.mp4");
+}
+
+function drawProcessedFrame(img_data){
+	if(fp != null){
+		// Render to viewport
+		fp.viewport.putImageData(img_data, 0, 0);
+	}
+}
+
+function updateColorChangeSpeed(newValue) { if (fp != null) fp.color_change_speed = newValue; }
 
 // create video element : Markdown does not support 'video' and 'canvas' elements:
 function addVideoElements(videoPath) {
@@ -57,17 +84,6 @@ function makeFrameProcessor(videoName) {
 
    fp.color_change_speed = 10;
 
-   function _freeArray(heapBytes) {
-      Module._free(heapBytes.byteOffset);
-   }
-
-   function _arrayToHeap(typedArray) {
-      var numBytes = typedArray.length * typedArray.BYTES_PER_ELEMENT;
-      var ptr = Module._malloc(numBytes);
-      heapBytes = Module.HEAPU8.subarray(ptr, ptr + numBytes);
-      heapBytes.set(typedArray);
-      return heapBytes;
-   }
 
    // Compute and display the next frame
    fp.renderFrame = function () {
@@ -76,24 +92,8 @@ function makeFrameProcessor(videoName) {
                    fp.video.videoHeight, 0, 0, fp.width, fp.height);
       var img_data = fp.ctx.getImageData(0, 0, fp.width, fp.height);
 
-      if (!fp.frame_bytes) {
-         fp.frame_bytes = _arrayToHeap(img_data.data);
-      }
-      else if (fp.frame_bytes.length !== img_data.data.length) {
-         _freeArray(fp.frame_bytes); // free heap memory
-         fp.frame_bytes = _arrayToHeap(img_data.data);
-      }
-      else {
-         fp.frame_bytes.set(img_data.data);
-      }
-
-      // Perform operation on copy, no additional conversions needed, direct pointer manipulation
-      // results will be put directly into the output param.
-      Module._rotate_colors(img_data.width, img_data.height, fp.frame_bytes.byteOffset, fp.frame_bytes.byteOffset, fp.color_change_speed);
-      // copy output to ImageData
-      img_data.data.set(fp.frame_bytes);
-      // Render to viewport
-      fp.viewport.putImageData(img_data, 0, 0);
+      worker.postMessage({'cmd': 'processFrame', 'img_data': img_data, 'color_change_speed': fp.color_change_speed});
+      
    };
 
    // Rendering call-back
