@@ -1,4 +1,5 @@
 build*/
+opencv/
 data/
 ref/
 node_modules
